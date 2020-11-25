@@ -6,7 +6,7 @@ using System.Text;
 
 namespace LINQ_toObject
 {
-    public class Shop
+    public class Esercizi
     {
         // Create lists
         public static List<Product> CreateProductList()
@@ -242,6 +242,45 @@ namespace LINQ_toObject
 
             #endregion
 
+            #region GroupBy
+             
+            // QUERY SYNTAX
+
+            // raggruppiamo gli ordini per l'ID del prodotto 
+            var groupByList =
+                from o in orderList
+                group o by o.ProductId into gbl // ho cambiato il nome per semplicità. Into è come fare un alias
+                select gbl;
+
+            // groupByList per una chiave mi dà una lista di ciò che ho raggruppato per quella chiave 
+
+            foreach (var order in groupByList) // order è un IGrouping, formato dalla chiave e da una lista di Ordini
+            // sto ciclando su ogni raggruppamento
+            {
+                Console.WriteLine(order.Key); // key è ProductId
+                foreach (var item in order)
+                // item è un Order
+                {
+                    Console.WriteLine($"\t Product ID: {item.ProductId} - Quantity: {item.Quantity}");
+                }
+            }
+
+            // METHOD SYNTAX
+
+            var groupByList2 =
+                orderList
+                .GroupBy(o => o.ProductId);
+
+            foreach (var order in groupByList2)
+            {
+                Console.WriteLine(order.Key);
+                foreach (var item in order)
+                {
+                    Console.WriteLine($"\t Product ID: {item.ProductId} - Quantity: {item.Quantity}");
+                }
+            }
+
+            #endregion
 
 
         }
